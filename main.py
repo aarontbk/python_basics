@@ -1,16 +1,21 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi3, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# input: two directory paths
+# output: print which directory has more files (recursively)
+# notes: you can use os.listdir and os.path.isdir but not os.walk
+# hint: to implement os.walk read about DFS and recursion
 
-# you forgot to blablabla
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+import os.path
+
+path1 = input("Give a path: ")
+path2 = input("Give another path: ")
+file_count1 = sum(len(files) for _, _, files in os.walk(path1))
+file_count2 = sum(len(files) for _, _, files in os.walk(path2))
+
+if file_count1 > file_count2:
+    print(path1 + "   --->  has more files")
+elif file_count1 == file_count2:
+    print("both paths have: " + file_count1 + " files")
+else:
+    print(path2 + "   --->  has more files")
