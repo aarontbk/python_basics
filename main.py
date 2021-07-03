@@ -1,5 +1,3 @@
-
-
 # input: two directory paths
 # output: print which directory has more files (recursively)
 # notes: you can use os.listdir and os.path.isdir but not os.walk
@@ -8,23 +6,23 @@
 
 import os.path
 
-file_count1 = 0
-file_count2 = 0
-
 path1 = input("Give a path: ")
 path2 = input("Give another path: ")
 
-def count_files(file_count, path):
-    dir = os.listdir(path)
-    for i in dir (len(dir)):
-        if os.path.isfile(path + r"\"" + i):
+def count_files(path):
+    file_count: int = 0
+    files = [os.path.splitext(filename)[0] for filename in os.listdir(path)]
+    for i in range(len(files)):
+        if os.path.isfile(path + r"\"" + files[i]):
             file_count += 1
+            print(file_count)
         else:
-            count_files(file_count, os.listdir(path + r"\"" + i), dir)
+            count_files(os.listdir(path + r"\"" + files[i]))
     return file_count
 
-first = count_files(file_count1, path1)
-second = count_files(file_count2, path2)
+
+file_count1 = count_files(path1)
+file_count2 = count_files(path2)
 
 if file_count1 > file_count2:
     print(path1 + "   --->  has more files")
