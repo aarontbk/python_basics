@@ -10,7 +10,6 @@ path1 = input("Give a path: ")
 path2 = input("Give another path: ")
 
 def count_files(path):
-    global file_count
     file_count = 0
     files = os.listdir(path)
     for i in range(len(files)):
