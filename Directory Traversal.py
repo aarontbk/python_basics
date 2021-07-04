@@ -4,6 +4,8 @@
 # hint: to implement os.walk read about DFS and recursion
 
 # CR: create a class named DirectoryTraversal or something like that organize the code
+# DirectoryTraversal(path: string)
+# count_files() -> int
 import os.path
 
 
@@ -11,19 +13,20 @@ path1 = input("Give a path: ")
 path2 = input("Give another path: ")
 
 # CR: dont split the code flow with a function in the middle
-
-def count_files(path):
-    global file_count # CR: remove global
+# CR: support hidden folders
+def count_files(path: str) -> int:
     file_count = 0 
     files = os.listdir(path)
     for i in range(len(files)):
         # CR: use a variable to store path + "\\" + files[i]
+        # CR: use os.path.join()
         if os.path.isdir(path + "\\" + files[i]):
             file_count += count_files(path + "\\" + files[i])
         else:
             file_count += 1
 
     return file_count
+
 
 
 file_count1 = count_files(path1)
