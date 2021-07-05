@@ -9,17 +9,18 @@
 import os.path
 
 class DirectoryTraversal:
-
+    path: str = ""
     def __init__(self, path) -> None:
         self.path = path    #instance variable
 
-    def count_files(self, path) -> int:
+    def count_files(self) -> int:
         file_count: int = 0
-        files = os.listdir(path)
+        files = os.listdir(self.path)
         for i in range(len(files)):
-            path_in_path: str = os.path.join(path, files[i])
+            path_in_path: str = os.path.join(self.path, files[i])
             if os.path.isdir(path_in_path):
-                file_count += self.count_files(path_in_path)
+                sub_d = DirectoryTraversal(path_in_path)
+                file_count += sub_d.count_files()
             else:
                 file_count += 1
 
@@ -30,8 +31,8 @@ path2: str = input("Give another path: ")
 
 d1: object = DirectoryTraversal(path1)
 d2: object = DirectoryTraversal(path2)
-count1: int = d1.count_files(path1)
-count2: int = d2.count_files(path2)
+count1: int = d1.count_files()
+count2: int = d2.count_files()
 print("path1 has: " + str(count1) + " files")
 print("path2 has: " + str(count2) + " files")
 
