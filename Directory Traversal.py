@@ -8,35 +8,36 @@
 # count_files() -> int
 import os.path
 
+class DirectoryTraversal:
 
-path1 = input("Give a path: ")
-path2 = input("Give another path: ")
+    def __init__(self, path) -> None:
+        self.path = path    #instance variable
 
-# CR: dont split the code flow with a function in the middle
-# CR: support hidden folders
-def count_files(path: str) -> int:
-    file_count = 0 
-    files = os.listdir(path)
-    for i in range(len(files)):
-        # CR: use a variable to store path + "\\" + files[i]
-        # CR: use os.path.join()
-        if os.path.isdir(path + "\\" + files[i]):
-            file_count += count_files(path + "\\" + files[i])
-        else:
-            file_count += 1
+    def count_files(self, path) -> int:
+        file_count: int = 0
+        files = os.listdir(path)
+        for i in range(len(files)):
+            path_in_path: str = os.path.join(path, files[i])
+            if os.path.isdir(path_in_path):
+                file_count += self.count_files(path_in_path)
+            else:
+                file_count += 1
 
-    return file_count
+        return file_count
 
+path1: str = input("Give a path: ")
+path2: str = input("Give another path: ")
 
+d1: object = DirectoryTraversal(path1)
+d2: object = DirectoryTraversal(path2)
+count1: int = d1.count_files(path1)
+count2: int = d2.count_files(path2)
+print("path1 has: " + str(count1) + " files")
+print("path2 has: " + str(count2) + " files")
 
-file_count1 = count_files(path1)
-file_count2 = count_files(path2)
-print("path1 has: " + str(file_count1) + " files")
-print("path2 has: " + str(file_count2) + " files")
-
-if file_count1 > file_count2:
+if count1 > count2:
     print("path1 has more files")
-elif file_count1 == file_count2:
+elif count1 == count2:
     print("both paths have the same amount of files")
 else:
     print("path2 has more files")
