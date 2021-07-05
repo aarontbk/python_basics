@@ -19,8 +19,7 @@ class DirectoryTraversal:
         for i in range(len(files)):
             path_in_path: str = os.path.join(self.path, files[i])
             if os.path.isdir(path_in_path):
-                sub_d = DirectoryTraversal(path_in_path)
-                file_count += sub_d.count_files()
+                file_count += DirectoryTraversal(path_in_path).count_files()
             else:
                 file_count += 1
 
